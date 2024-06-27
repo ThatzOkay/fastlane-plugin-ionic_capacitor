@@ -179,6 +179,10 @@ module Fastlane
         is_signed = !params[:keystore_path].empty?
         signed = is_signed ? '' : '-unsigned'
 
+        does_android_build_exist = File.exist?("./android/app/build/outputs/#{android_package_type}/#{build_type}/app-#{build_type}#{signed}#{android_package_extension}")
+        
+        file_name = does_android_build_exist ? "app-#{build_type}#{signed}#{android_package_extension}" : "app-#{build_type}#{android_package_extension}"
+
         ENV['CAPACITOR_ANDROID_RELEASE_BUILD_PATH'] = "./android/app/build/outputs/#{android_package_type}/#{build_type}/app-#{build_type}#{signed}#{android_package_extension}"
         ENV['CAPACITOR_IOS_RELEASE_BUILD_PATH'] = "./ios/build/device/app.ipa"
       end
